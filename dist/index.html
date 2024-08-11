@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Viewport-->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+    />
+    <!-- SEO Meta Tags-->
+    <title>Chat Anonymously</title>
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="./assets/media/fav/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./assets/media/fav/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="./assets/media/fav/favicon-16x16.png"
+    />
+    <link rel="shortcut icon" href="./assets/media/fav/favicon.ico" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <link rel="stylesheet" href="./assets/webfonts/inter/inter.css" />
+    <link rel="stylesheet" href="./assets/css/app.min.css" />
+    <link rel="stylesheet" href="./assets/css/skins/dark-skin.min.css" />
+  </head>
+
+  <body class="chats-tab-open">
+    <!-- Main Layout Start -->
+    <div class="main-layout">
+      <!-- Sidebar Start -->
+      <aside class="sidebar">
+        <!-- Tab Content Start -->
+        <div class="tab-content">
+          <!-- Chat Tab Content Start -->
+          <div class="tab-pane active" id="chats-content">
+            <div class="d-flex flex-column h-100">
+              <div class="hide-scrollbar h-100" id="chatContactsList">
+                <!-- Chat Header Start -->
+                <div class="sidebar-header sticky-top p-2" id="sidebar">
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <!-- Chat Tab Pane Title Start -->
+                    <h5 class="font-weight-semibold mb-0">Click on username to go to chat</h5>
+                    <!-- Chat Tab Pane Title End -->
+                  </div>
+                </div>
+                <!-- Chat Header End -->
+
+                <!-- Chat Contact List Start -->
+                <ul class="contacts-list" id="chatContactTab" data-chat-list="">
+                  
+                </ul>
+                <!-- Chat Contact List End -->
+              </div>
+            </div>
+          </div>
+          <!-- Chats Tab Content End -->
+        </div>
+        <!-- Tab Content End -->
+      </aside>
+      <!-- Sidebar End -->
+
+      <!-- Main Start -->
+      <main class="main main-visible">
+        <!-- Chats Page Start -->
+        <div class="chats">
+          <div class="chat-body">
+            <!-- Chat Header Start-->
+            <div class="chat-header">
+              <!-- Chat Back Button (Visible only in Small Devices) -->
+              <button
+                class="btn btn-secondary btn-icon btn-minimal btn-sm text-muted d-xl-none"
+                type="button"
+                data-close=""
+                id="back"
+              >
+                <!-- Default :: Inline SVG -->
+                <svg
+                  class="hw-20"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M10 19l-7-7m0 0l7-7m-7 7h18"
+                  />
+                </svg>
+              </button>
+
+              <!-- Chat participant's Name -->
+              <div class="media chat-name align-items-center text-truncate">
+                <div class="avatar avatar-online d-none d-sm-inline-block mr-3">
+                  <img src="./assets/media/avatar/fuxchat.jpeg" alt="" />
+                </div>
+
+                <div class="media-body align-self-center">
+                  <h5 class="text-truncate mb-0">Chat Room -</h5>
+                </div>
+              </div>
+            </div>
+            <!-- Chat Header End-->
+            <!-- Chat Content Start-->
+            <div class="chat-content p-2" id="messageBody">
+              <div class="container" id="chat-msg-load">
+
+              </div>
+
+              <!-- Scroll to finish -->
+              <div class="chat-finished" id="chat-finished"></div>
+            </div>
+            <!-- Chat Content End-->
+
+            <!-- Chat Footer Start-->
+            <div class="chat-footer">
+              <textarea
+                class="form-control emojionearea-form-control"
+                id="messageInput"
+                rows="1"
+                placeholder="Type your message here..."
+              ></textarea>
+              <div
+                class="btn btn-primary btn-icon send-icon rounded-circle text-light mb-1"
+                role="button" id="send"
+              >
+                <svg
+                  class="hw-24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M14 5l7 7m0 0l-7 7m7-7H3"
+                  />
+                </svg>
+              </div>
+            </div>
+            <!-- Chat Footer End-->
+          </div>
+        </div>
+        <!-- Chats Page End -->
+      </main>
+      <!-- Main End -->
+
+      <div class="backdrop"></div>
+    </div>
+    <!-- Main Layout End -->
+
+    <!-- Javascript Files -->
+    <script src="./assets/vendors/jquery/jquery-3.5.0.min.js"></script>
+    <script src="./assets/vendors/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="./assets/vendors/magnific-popup/jquery.magnific-popup.min.js"></script>
+    <script src="./assets/vendors/svg-inject/svg-inject.min.js"></script>
+    <script src="./assets/vendors/modal-stepes/modal-steps.min.js"></script>
+    <script src="./assets/vendors/emojione/emojionearea.min.js"></script>
+    <script src="./assets/js/app.js"></script>
+
+    <script>
+      function scrollToEnd() {
+        document.querySelector(".chat-finished").scrollIntoView({
+          block: "end", // "start" | "center" | "end" | "nearest",
+          behavior: "auto", //"auto"  | "instant" | "smooth",
+        });
+      }
+
+      // Call the function to scroll to the end of the chat
+      scrollToEnd();
+
+      // Set up an observer to detect changes in the chat content
+      const chatContent = document.getElementById("messageBody");
+      const observer = new MutationObserver(scrollToEnd);
+
+      observer.observe(chatContent, { childList: true, subtree: true });
+
+      document.getElementById("back").addEventListener("click", function () {
+        var sidebarHeader = document.getElementById("sidebar");
+        sidebarHeader.style.display = "block";
+      });
+
+      document.getElementById("chatContactTab").addEventListener("click", function () {
+        var sidebarHeader = document.getElementById("sidebar");
+        if (window.innerWidth < 1200) {
+          sidebarHeader.style.display = "none";
+        }
+      });
+    </script>
+        <audio id="msgsound" src="./assets/sound/notify.mp3" preload="auto"></audio>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="./assets/js/script.js"></script>
+  </body>
+</html>

@@ -2,6 +2,7 @@ const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
 const admin = require('firebase-admin');
+const cors = require('cors'); // Import the CORS middleware
 const serviceAccount = require('./firebase-service-account.json');
 
 admin.initializeApp({
@@ -10,10 +11,17 @@ admin.initializeApp({
 });
 
 const db = admin.firestore();
-
 const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
+
+// Enable CORS for your development environment
+app.use(cors({
+  origin: 'https://priyavats.netlify.app',
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type'],
+  credentials: true
+}));
 
 app.use(express.static('dist'));
 
